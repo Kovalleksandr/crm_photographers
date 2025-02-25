@@ -1,8 +1,8 @@
+# PhotoManager/urls.py
 from django.contrib import admin
-from django.urls import path
-from django.urls import include, path
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/accounts/', include('accounts.urls')),  # Ось цей рядок повинен бути!
+    path('api/accounts/', include('apps.accounts.urls')),  # Оновлено з 'accounts.urls' на 'apps.accounts.urls'
 ]

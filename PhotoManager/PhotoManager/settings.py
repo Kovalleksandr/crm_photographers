@@ -40,11 +40,11 @@ INSTALLED_APPS = [
 
         # Наші додатки
     'rest_framework',
-    'accounts',
-    'crm',
-    'filesharing',
-    'subscriptions',
-    'multi_tenancy',
+    'apps.accounts',
+    'apps.crm',
+    'apps.filesharing',
+    'apps.subscriptions',
+    'apps.multi_tenancy',
 ]
 
 MIDDLEWARE = [
@@ -83,12 +83,17 @@ WSGI_APPLICATION = 'PhotoManager.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "db.sqlite3",
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'photomanager_default',
+        'USER': 'photomanager_user',
+        'PASSWORD': '29062407',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
-DATABASE_ROUTERS = ['multi_tenancy.db_router.TenantRouter']
+
+DATABASE_ROUTERS = ['apps.multi_tenancy.db_router.TenantRouter']
 
 
 
