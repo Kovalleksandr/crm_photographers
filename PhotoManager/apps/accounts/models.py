@@ -1,6 +1,8 @@
 # apps/accounts/models.py
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils.crypto import get_random_string
+from apps.multi_tenancy.models import Organization  # Додаємо імпорт
 
 class CustomUser(AbstractUser):
     ROLES = (
@@ -10,7 +12,7 @@ class CustomUser(AbstractUser):
     )
     role = models.CharField(max_length=20, choices=ROLES, default='photographer')
     organization = models.ForeignKey(
-        'multi_tenancy.Organization',  # Оновлено шлях із 'multi_tenancy' на 'apps.multi_tenancy'
+        'multi_tenancy.Organization',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -25,3 +27,14 @@ class CustomUser(AbstractUser):
             super().save(update_fields=['organization'])
         else:
             super().save(*args, **kwargs)
+
+class Invitation(models.Model):
+    code = models.CharField(max_length=16, unique=True, default=get_random_string)
+    organization = models.ForeignKey(
+        'multi_tenancy.Organization',
+        on_delete=models.CASCADE,
+        related_name='invitations'
+    )
+    role = models.CharField(max_length=20, choices=CustomUser.ROLES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_used = models.BooleanField(default=False)

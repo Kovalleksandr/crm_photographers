@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
         # Наші додатки
+    'corsheaders',
     'rest_framework',
     'apps.accounts',
     'apps.crm',
@@ -50,11 +51,14 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    
 ]
 
 ROOT_URLCONF = 'PhotoManager.urls'
@@ -81,6 +85,8 @@ WSGI_APPLICATION = 'PhotoManager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -89,11 +95,14 @@ DATABASES = {
         'PASSWORD': '29062407',
         'HOST': 'localhost',
         'PORT': '5432',
+        'OPTIONS': {}, 
     }
 }
 
 
 DATABASE_ROUTERS = ['apps.multi_tenancy.db_router.TenantRouter']
+
+print("Loading settings with OPTIONS:", DATABASES['default']['OPTIONS'])
 
 
 
@@ -141,3 +150,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # вказуємо нову модель користувача
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
+# дозвіл запитів з усіх джерел:
+CORS_ALLOW_ALL_ORIGINS = True

@@ -7,6 +7,6 @@ class TenantMiddleware(MiddlewareMixin):
         if request.user.is_authenticated:
             try:
                 org = Organization.objects.get(owner=request.user)
-                TenantRouter.set_database(f"org_{org.id}")
+                TenantRouter.set_database(f"tenant_{org.id}")  # Змінили "org_" на "tenant_" для відповідності db_name
             except Organization.DoesNotExist:
-                TenantRouter.set
+                TenantRouter.set_database('default')  # Завершили логіку
