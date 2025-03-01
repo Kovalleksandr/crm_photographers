@@ -41,6 +41,7 @@ INSTALLED_APPS = [
         # Наші додатки
     'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
     'apps.accounts',
     'apps.crm',
     'apps.filesharing',
@@ -153,3 +154,11 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # дозвіл запитів з усіх джерел:
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+}

@@ -19,11 +19,9 @@ class RegisterAdminView(APIView):
 
 class InviteUserView(APIView):
     permission_classes = [IsAuthenticated]
-
     def post(self, request):
         if request.user.role != 'admin':
             return Response({"error": "Тільки адміністратор може створювати запрошення"}, status=403)
-        
         serializer = InviteSerializer(data=request.data)
         if serializer.is_valid():
             invitation = serializer.save(organization=request.user.organization)

@@ -29,7 +29,7 @@ class CustomUser(AbstractUser):
             super().save(*args, **kwargs)
 
 class Invitation(models.Model):
-    code = models.CharField(max_length=16, unique=True, default=get_random_string)
+    code = models.CharField(max_length=16, unique=True, default=lambda: get_random_string(16))  # Виправлено
     organization = models.ForeignKey(
         'multi_tenancy.Organization',
         on_delete=models.CASCADE,
