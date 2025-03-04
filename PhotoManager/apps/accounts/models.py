@@ -4,6 +4,10 @@ from django.db import models
 from django.utils.crypto import get_random_string
 from apps.multi_tenancy.models import Organization  # Додаємо імпорт
 
+
+def generate_invite_code():
+    return get_random_string(length=16)
+
 class CustomUser(AbstractUser):
     ROLES = (
         ('admin', 'Адміністратор'),
@@ -29,7 +33,7 @@ class CustomUser(AbstractUser):
             super().save(*args, **kwargs)
 
 class Invitation(models.Model):
-    code = models.CharField(max_length=16, unique=True, default=lambda: get_random_string(16))  # Виправлено
+    code = models.CharField(max_length=16, unique=True, default=generate_invite_code)  # Змінено
     organization = models.ForeignKey(
         'multi_tenancy.Organization',
         on_delete=models.CASCADE,
