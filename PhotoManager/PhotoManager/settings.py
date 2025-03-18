@@ -89,7 +89,16 @@ DATABASES = {
         'PASSWORD': '29062407',
         'HOST': 'localhost',
         'PORT': '5432',
-        'OPTIONS': {}, 
+        'OPTIONS': {},
+    },
+    'tenant_1': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'tenant_1',
+        'USER': 'photomanager_user',
+        'PASSWORD': '29062407',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'OPTIONS': {},
     }
 }
 

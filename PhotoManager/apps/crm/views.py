@@ -10,8 +10,8 @@ class PhotoUploadView(APIView):
     def post(self, request):
         if request.user.role not in ['photographer', 'admin']:
             return Response({"error": "Тільки фотографи або адміністратори можуть завантажувати фото"}, status=403)
-        serializer = PhotoSerializer(data=request.data)
+        serializer = PhotoSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
-            serializer.save(uploaded_by=request.user)
+            serializer.save()  # Без uploaded_by_id
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
